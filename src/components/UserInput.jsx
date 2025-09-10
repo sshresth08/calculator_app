@@ -1,22 +1,6 @@
 import { useState } from "react";
 
-export default function UserInput() {
-  const[userInput, setUserInput] = useState({
-    initialInvestment: 10000,
-    annualInvestment: 1200,
-    expectedReturn: 7,
-    duration: 10,
-  });
-
-  function handleChange(inputIdentifier, newValue) {
-    setUserInput((prevUserInput) => {
-      return {
-        ...prevUserInput,
-        [inputIdentifier]: newValue,
-      };
-    });
-  }
-
+export default function UserInput({ onChange, userInput }) {
   return (
     <section id="user-input">
       <div className="input-group">
@@ -26,8 +10,14 @@ export default function UserInput() {
             type="number"
             required
             value={userInput.initialInvestment}
+            /*
+                Important: When we extract value like event.target.value 
+                it will alwaya return the value of type String, so we have be careful
+                while using it in calculations as we may need to convert it to number firstby simply 
+                adding + sign before it 
+            */
             onChange={(event) =>
-              handleChange("initialInvestment", event.target.value)
+              onChange("initialInvestment", event.target.value)
             }
           />
         </p>
@@ -37,8 +27,8 @@ export default function UserInput() {
             type="number"
             required
             value={userInput.annualInvestment}
-            onChnage={(event) =>
-              handleChange("annualInvestment", event.target.value)
+            onChange={(event) =>
+              onChange("annualInvestment", event.target.value)
             }
           />
         </p>
@@ -50,9 +40,7 @@ export default function UserInput() {
             type="number"
             required
             value={userInput.expectedReturn}
-            onChange={(event) =>
-              handleChange("expectedReturn", event.target.value)
-            }
+            onChange={(event) => onChange("expectedReturn", event.target.value)}
           />
         </p>
         <p>
@@ -61,7 +49,7 @@ export default function UserInput() {
             type="number"
             required
             value={userInput.duration}
-            onChange={(event) => handleChange("duration", event.target.value)}
+            onChange={(event) => onChange("duration", event.target.value)}
           />
         </p>
       </div>
