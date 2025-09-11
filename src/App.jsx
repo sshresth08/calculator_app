@@ -1,4 +1,4 @@
-import { useState } from "react"; 
+import { useState } from "react";
 import Header from "./components/Header";
 import UserInput from "./components/UserInput";
 import Results from "./components/Results";
@@ -6,12 +6,14 @@ import Results from "./components/Results";
     we must have only one Root Jsx element which may contain many Siblings Elments as needed
 */
 function App() {
-  const[userInput, setUserInput] = useState({
+  const [userInput, setUserInput] = useState({
     initialInvestment: 10000,
     annualInvestment: 1200,
     expectedReturn: 7,
     duration: 10,
   });
+
+  const inputIsValid = userInput.duration > 0;
 
   function handleChange(inputIdentifier, newValue) {
     setUserInput((prevUserInput) => {
@@ -25,8 +27,9 @@ function App() {
   return (
     <ol>
       <Header />
-      <UserInput userInput={userInput} onChange={handleChange}/>
-      <Results userInput={userInput}/>
+      <UserInput userInput={userInput} onChange={handleChange} />
+      {!inputIsValid && <p className="center">Please Enter a Duration greater than zero.</p>}
+      {inputIsValid && <Results userInput={userInput} />}
     </ol>
   );
 }
