@@ -11,6 +11,12 @@ export default function UserInput({ onChange, userInput }) {
             type="number"
             required
             value={userInput.initialInvestment}
+            /*
+                Important: When we extract value like event.target.value 
+                it will alwaya return the value of type String, so we have be careful
+                while using it in calculations as we may need to convert it to number firstby simply 
+                adding + sign before it 
+            */
             onChange={(event) =>
               onChange("initialInvestment", event.target.value)
             }
